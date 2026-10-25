@@ -1,0 +1,8 @@
+[project]
+name = "heroes-api"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi[standard]>=0.143.3",
+    "sqlmodel>=0.0.48",
+]
