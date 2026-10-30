@@ -51,3 +51,6 @@ htmlcov/
 # Sistema operacional
 .DS_Store
 Thumbs.db
+
+# Arquivos enviados via API
+uploads/

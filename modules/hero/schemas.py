@@ -19,3 +19,12 @@ class HeroResponse(HeroBase):
     created_at: datetime
     updated_at: datetime
     deleted_at: datetime | None
+    photo_path: str | None = None
+
+
+class HeroPhotoResponse(SQLModel):
+    hero_id: UUID
+    filename: str
+    content_type: str
+    size: int
+    path: str
