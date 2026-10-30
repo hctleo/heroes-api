@@ -15,4 +15,5 @@ class HeroBase(SQLModel):
 class HeroModel(BaseModel, HeroBase, table=True):
     __tablename__ = "hero"
 
+    photo_path: str | None = Field(default=None)
     missions: list["MissionModel"] = Relationship(back_populates="hero")

@@ -1,7 +1,16 @@
-from fastapi import APIRouter, Query
-from .schemas import HeroCreate, HeroUpdate, HeroResponse
+from fastapi import APIRouter, Query, UploadFile
+from fastapi.responses import FileResponse
+from .schemas import HeroCreate, HeroUpdate, HeroResponse, HeroPhotoResponse
 from database import SessionDep
-from .service import create, read, read_one, update, delete
+from .service import (
+    create,
+    read,
+    read_one,
+    update,
+    delete,
+    upload_photo,
+    get_photo_path,
+)
 from typing import Annotated
 from uuid import UUID
 
@@ -37,3 +46,15 @@ def update_hero(session: SessionDep, hero_id: UUID, data: HeroUpdate) -> HeroRes
 @hero_router.delete("/{hero_id}", status_code=204)
 def delete_hero(session: SessionDep, hero_id: UUID):
     return delete(session, hero_id)
+
+
+@hero_router.post("/{hero_id}/photo", tags=["Hero"], response_model=HeroPhotoResponse)
+async def upload_hero_photo(
+    session: SessionDep, hero_id: UUID, file: UploadFile
+) -> HeroPhotoResponse:
+    return await upload_photo(session, hero_id, file)
+
+
+@hero_router.get("/{hero_id}/photo", tags=["Hero"], response_class=FileResponse)
+def read_hero_photo(session: SessionDep, hero_id: UUID):
+    return FileResponse(get_photo_path(session, hero_id))
